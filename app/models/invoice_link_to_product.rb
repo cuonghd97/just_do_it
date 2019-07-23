@@ -1,0 +1,2 @@
+class InvoiceLinkToProduct < ApplicationRecord
+end

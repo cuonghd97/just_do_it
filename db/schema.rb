@@ -10,33 +10,61 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_102259) do
+ActiveRecord::Schema.define(version: 2019_07_23_081606) do
 
-  create_table "carts", force: :cascade do |t|
+  create_table "carts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "products_id"
+    t.bigint "users_id"
+    t.index ["products_id"], name: "index_carts_on_products_id"
+    t.index ["users_id"], name: "index_carts_on_users_id"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "products_id"
+    t.bigint "users_id"
+    t.index ["products_id"], name: "index_comments_on_products_id"
+    t.index ["users_id"], name: "index_comments_on_users_id"
+  end
+
+  create_table "invoice_link_to_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "invoice_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invoice_id"], name: "index_invoice_link_to_products_on_invoice_id"
+    t.index ["product_id"], name: "index_invoice_link_to_products_on_product_id"
+  end
+
+  create_table "invoice_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "invoices", force: :cascade do |t|
+  create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "users_id"
+    t.bigint "invoice_status_id"
+    t.index ["invoice_status_id"], name: "index_invoices_on_invoice_status_id"
+    t.index ["users_id"], name: "index_invoices_on_users_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
-    t.integer "category_id"
-    t.integer "provider_id"
+    t.bigint "category_id"
+    t.bigint "provider_id"
     t.integer "stock"
     t.integer "price"
     t.string "image"
@@ -47,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_102259) do
     t.index ["provider_id"], name: "index_products_on_provider_id"
   end
 
-  create_table "providers", force: :cascade do |t|
+  create_table "providers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.string "email"
@@ -56,14 +84,17 @@ ActiveRecord::Schema.define(version: 2019_07_19_102259) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "ratings", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "rate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_ratings_on_user_id"
+    t.bigint "products_id"
+    t.bigint "users_id"
+    t.index ["products_id"], name: "index_ratings_on_products_id"
+    t.index ["users_id"], name: "index_ratings_on_users_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "username"
     t.string "password"
     t.string "email"
@@ -76,7 +107,16 @@ ActiveRecord::Schema.define(version: 2019_07_19_102259) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "carts", "products", column: "products_id"
+  add_foreign_key "carts", "users", column: "users_id"
+  add_foreign_key "comments", "products", column: "products_id"
+  add_foreign_key "comments", "users", column: "users_id"
+  add_foreign_key "invoice_link_to_products", "invoices"
+  add_foreign_key "invoice_link_to_products", "products"
+  add_foreign_key "invoices", "invoice_statuses"
+  add_foreign_key "invoices", "users", column: "users_id"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "providers"
-  add_foreign_key "ratings", "users"
+  add_foreign_key "ratings", "products", column: "products_id"
+  add_foreign_key "ratings", "users", column: "users_id"
 end

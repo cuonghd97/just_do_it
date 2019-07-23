@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2019_07_23_081606) do
 
   create_table "carts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "products_id"
@@ -47,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_07_23_081606) do
   end
 
   create_table "invoice_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "status"
+    t.text "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -85,7 +86,7 @@ ActiveRecord::Schema.define(version: 2019_07_23_081606) do
   end
 
   create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "rate"
+    t.integer "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "products_id"
@@ -99,10 +100,10 @@ ActiveRecord::Schema.define(version: 2019_07_23_081606) do
     t.string "password"
     t.string "email"
     t.string "fullname"
-    t.string "address"
+    t.text "address"
     t.string "phone"
     t.string "gender"
-    t.string "birthday"
+    t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

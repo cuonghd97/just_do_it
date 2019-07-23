@@ -1,2 +1,0 @@
-class InvoiceStatuss < ApplicationRecord
-end

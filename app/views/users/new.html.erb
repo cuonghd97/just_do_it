@@ -6,11 +6,14 @@
   <%= f.label :email %>
   <%= f.email_field :email %>
 
+  <%= f.label :fullname %>
+  <%= f.text_field :fullname %>
+
   <%= f.label :password %>
   <%= f.password_field :password %>
 
-  <%= f.label :fullname %>
-  <%= f.text_field :fullname %>
+  <%= f.label :password_confirmation, "Nhập lại mật khẩu" %>
+  <%= f.password_field :password_confirmation %>
 
   <%= f.submit "Đăng ký" %>
 <% end %>

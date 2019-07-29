@@ -1,0 +1,6 @@
+<%= provide(:title, "Thông tin người dùng") %>
+<%= form_for @user, url: edit_user_path do |f| %>
+  <%= f.label :fullname %>
+  <%= f.text_field :fullname %>
+  <%= f.submit "Lưu" %>
+<% end %>

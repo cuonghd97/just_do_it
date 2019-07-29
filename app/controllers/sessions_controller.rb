@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_url
     else
+      flash[:danger] = "Đăng nhập thất bại"
       redirect_to root_url
     end
   end

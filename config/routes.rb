@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   get '/shops', to: 'shops#index'
   # resources :shops
 
-  resources :admin
+  # resources :admin
+  scope :admin do
+    resources :categories
+  end
+
 
   root 'shops#index'
 end

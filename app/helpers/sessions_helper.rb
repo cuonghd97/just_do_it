@@ -15,6 +15,11 @@ module SessionsHelper
     end
   end
 
+  def is_admin?(email)
+    user = User.find_by email: email
+    user.admin
+  end
+
   def logged_in?
     !current_user.nil?
   end

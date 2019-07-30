@@ -5,21 +5,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= render 'layouts/shop/header' %>
-    <br>
-    <br>
-    <div class='container'>
-      <div class='row'>
-        <%= render 'layouts/shop/sidebar' %>
-        <div class='col-lg-9'>
-          <%= yield %>
-        </div>
-      </div>
+  <body id="page-top">
+    <div class="wrapper">
+      <%= render 'layouts/admin/sidebar' %>
     </div>
   </body>
 </html>
